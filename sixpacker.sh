@@ -11,11 +11,11 @@ rm -f ${PNG}
 
 # Turn each folder into a single horizontal animation strip
 for folder in */ ; do
-  montage ${folder}*.png -tile x1 -geometry +0+0 ${folder%%/*}.png
+  montage ${folder}*.png -tile x1 -background none -geometry +0+0 ${folder%%/*}.png
 done
 
 # Stack the strips on top of each other to build the atlas
-montage *.png -tile 1x -geometry +0+0 ${PNG}
+montage *.png -tile 1x -geometry +0+0 -background none ${PNG}
 PNG_WIDTH=$(convert ./${PNG} -format "%w" info:)
 PNG_HEIGHT=$(convert ./${PNG} -format "%h" info:)
 
