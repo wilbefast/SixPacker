@@ -27,23 +27,23 @@ echo "format: RGBA8888" >> ${ATLAS}
 echo "filter: Linear,Linear" >> ${ATLAS}
 echo "repeat: none" >> ${ATLAS}
 
-OFFSET_Y=0
+Y=0
 for folder in */ ; do
   rm ${folder%%/*}.png
-  OFFSET_X=0
+  X=0
   INDEX=0
   for image in ${folder}*.png ; do 
     WIDTH=$(convert ./${image} -format "%w" info:)
     HEIGHT=$(convert ./${image} -format "%h" info:)
     echo ${folder%%/*} >> ${ATLAS}
     echo " rotate: false" >> ${ATLAS}
-    echo " xy: 0, 0" >> ${ATLAS}
+    echo " xy: ${X}, ${Y}" >> ${ATLAS}
     echo " size: ${WIDTH}, ${HEIGHT}" >> ${ATLAS}
     echo " orig: 0, 0" >> ${ATLAS}
-    echo " offset: ${OFFSET_X}, ${OFFSET_Y}" >> ${ATLAS}
+    echo " offset: 0, 0" >> ${ATLAS}
     echo " index: ${INDEX}" >> ${ATLAS}
-    ((OFFSET_X+=WIDTH))
+    ((X+=WIDTH))
     ((INDEX++))
   done
-  ((OFFSET_Y+=HEIGHT))
+  ((Y+=HEIGHT))
 done
